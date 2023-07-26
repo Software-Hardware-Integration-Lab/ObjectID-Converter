@@ -10,6 +10,9 @@
 		},
 		"editor.formatOnSave": true,
 		"editor.bracketPairColorization.enabled": true,
+		"cSpell.words": [
+			"Entra"
+		],
 	},
 	"extensions": {
 		"recommendations": [
