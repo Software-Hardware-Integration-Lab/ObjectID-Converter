@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"node_modules": true
+		},
+		"editor.formatOnSave": true,
+		"editor.bracketPairColorization.enabled": true,
+	},
+	"extensions": {
+		"recommendations": [
+			"streetsidesoftware.code-spell-checker",
+			"dbaeumer.vscode-eslint",
+			"eamodio.gitlens",
+			"gruntfuggly.todo-tree",
+		]
+	}
+}
