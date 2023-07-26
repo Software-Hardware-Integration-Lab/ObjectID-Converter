@@ -1,43 +1,43 @@
+import { convertToObjectId, convertToSid } from '../src';
 import chai from 'chai';
-import { convertToSid } from '../src/toSid';
 import { it } from 'mocha';
 import { randomUUID } from 'crypto';
 
 describe('Convert To SID', () => {
     describe('Successful Tests', () => {
         it('Hard Coded SID - 1', (done) => {
-            /** First hard coded Object ID to test. */
-            const objectIdToTest1 = '9ee93cd2-da63-42b6-98bb-1f313f2126c7';
+            /** Hard coded Object ID to test. */
+            const objectIdToTest = '9ee93cd2-da63-42b6-98bb-1f313f2126c7';
 
-            /** First hard coded result for a successful SID conversion. */
-            const expectedSid1 = 'S-1-12-1-2666085586-1119279715-824163224-3341164863';
+            /** Hard coded result for a successful SID conversion. */
+            const expectedSid = 'S-1-12-1-2666085586-1119279715-824163224-3341164863';
 
-            /** Results fo the first hard coded SID conversion. */
-            const results1 = convertToSid(objectIdToTest1);
+            /** Results fo the hard coded SID conversion. */
+            const results = convertToSid(objectIdToTest);
 
-            // Check results for hard coded operation 1
-            chai.expect(results1).to.be.a('string');
-            chai.expect(results1).to.equal(expectedSid1);
-            chai.expect(results1).to.be.lengthOf(51);
+            // Check results for hard coded operation
+            chai.expect(results).to.be.a('string');
+            chai.expect(results).to.equal(expectedSid);
+            chai.expect(results).to.be.lengthOf(51);
 
             // Finish testing section
             done();
         });
 
         it('Hard Coded SID - 2', (done) => {
-            /** Second hard coded Object ID to test. */
-            const objectIdToTest2 = '95bd3dd0-913a-44b8-9e08-db3fddc72f83';
+            /** Hard coded Object ID to test. */
+            const objectIdToTest = '95bd3dd0-913a-44b8-9e08-db3fddc72f83';
 
-            /** Second hard coded result for a successful SID conversion. */
-            const expectedSid2 = 'S-1-12-1-2512207312-1152946490-1071319198-2200946653';
+            /** Hard coded result for a successful SID conversion. */
+            const expectedSid = 'S-1-12-1-2512207312-1152946490-1071319198-2200946653';
 
-            /** Results fo the second hard coded SID conversion. */
-            const results2 = convertToSid(objectIdToTest2);
+            /** Results fo the hard coded SID conversion. */
+            const results = convertToSid(objectIdToTest);
 
-            // Check results for hard coded operation 2
-            chai.expect(results2).to.be.a('string');
-            chai.expect(results2).to.equal(expectedSid2);
-            chai.expect(results2).to.be.lengthOf(52);
+            // Check results for hard coded operation
+            chai.expect(results).to.be.a('string');
+            chai.expect(results).to.equal(expectedSid);
+            chai.expect(results).to.be.lengthOf(52);
 
             // Finish testing section
             done();
@@ -45,14 +45,18 @@ describe('Convert To SID', () => {
 
         it('Random SID', (done) => {
             /** Randomly generated UUID to test. */
-            const generatedUuid = randomUUID();
+            const generatedObjectId = randomUUID();
 
             /** Results of the conversion of the randomly generated SID. */
-            const resultsRandom = convertToSid(generatedUuid);
+            const resultsRandom = convertToSid(generatedObjectId);
+
+            /** ID that should match the generated Object ID. */
+            const validationId = convertToObjectId(resultsRandom);
 
             // Check results for a randomly generated SID
             chai.expect(resultsRandom).to.be.a('string');
             chai.expect(resultsRandom).length.to.be.lengthOf.below(257);
+            chai.expect(validationId).to.equal(generatedObjectId);
 
             // Finish testing section
             done();
