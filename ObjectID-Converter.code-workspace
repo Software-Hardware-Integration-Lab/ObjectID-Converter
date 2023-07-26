@@ -13,6 +13,9 @@
 		"cSpell.words": [
 			"Entra"
 		],
+		"cSpell.enableFiletypes": [
+			"github-actions-workflow"
+		],
 	},
 	"extensions": {
 		"recommendations": [

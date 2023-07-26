@@ -9,31 +9,55 @@ on:
     types: [released]
 
 jobs:
-  build-test:
+  build-validate:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Download Source Files
+        uses: actions/checkout@v3
+
+      - name: Setup Node.JS Runtime
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: npm ci
-      - run: npm run-script build
-      - run: npm run-script test
-      - run: npm run-script lint
 
-  publish-npm:
-    needs: build-test
+      - name: Install All Dependencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run-script build
+
+      - name: Runt Unit Tests
+        run: npm run-script test
+
+      - name: Run Lint Tests
+        run: npm run-script lint
+
+  publish-package:
+    needs: build-validate
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Download Source Files
+        uses: actions/checkout@v3
+
+      - name: Set up Node.JS Runtime
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
           scope: moot
-      - run: npm ci
-      - run: npm run-script build
-      - run: npm ci --omit=dev
-      - run: npm publish --access public
+
+      - name: Clean Install All Dependiencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run-script build
+
+      - name: Clear All But Runtime Dependincies
+        run: npm ci --omit=dev
+
+      - name: Upload Package to NPM Registry
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH}}
