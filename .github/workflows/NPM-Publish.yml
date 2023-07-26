@@ -17,8 +17,9 @@ jobs:
         with:
           node-version: 18
       - run: npm ci
-      - run: npm build
-      - run: npm test
+      - run: npm run-script build
+      - run: npm run-script test
+      - run: npm run-script lint
 
   publish-npm:
     needs: build-test
@@ -30,7 +31,7 @@ jobs:
           node-version: 18
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm build
+      - run: npm run-script build
       - run: npm ci --omit=dev
       - run: npm publish
         env:
