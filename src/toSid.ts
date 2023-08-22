@@ -1,4 +1,4 @@
-import { parse, validate } from 'uuid';
+import { parse } from 'uuid';
 
 /**
  * Converts an Object ID to a SID
@@ -6,8 +6,11 @@ import { parse, validate } from 'uuid';
  * @returns A Security Identifier, which is useful in Windows Server AD and Windows.
  */
 export function convertToSid(objectId: string): string {
+    /** Regular expression that matches a UUID version 4 (random). */
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/gui;
+
     // Check if the provided input is a valid Object ID
-    if (!validate(objectId)) {
+    if (typeof objectId !== 'string' || !uuidRegex.test(objectId)) {
         // Throw an error if it is not a valid UUID
         throw new Error('The specified object ID is not a valid UUID v4!');
     }
