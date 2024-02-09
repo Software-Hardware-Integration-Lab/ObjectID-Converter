@@ -47,13 +47,13 @@ jobs:
           registry-url: https://registry.npmjs.org/
           scope: moot
 
-      - name: Clean Install All Dependiencies
+      - name: Clean Install All Dependencies
         run: npm ci
 
       - name: Build Project
-        run: npm run-script build
+        run: npm run-script build:prod
 
-      - name: Clear All But Runtime Dependincies
+      - name: Clear All But Runtime Dependencies
         run: npm ci --omit=dev
 
       - name: Upload Package to NPM Registry

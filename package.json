@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node ./bin/index.mjs",
     "build": "npx tsc",
+    "build:prod": "npx tsc --sourceMap false",
     "test": "npx mocha",
     "lint": "npx eslint ./"
   },
