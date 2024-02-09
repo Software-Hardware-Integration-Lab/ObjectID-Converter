@@ -1,6 +1,6 @@
 {
   "name": "@moot-inc/objectid-converter",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Converts Microsoft Object IDs to and from SIDs.",
   "main": "bin/src/index.mjs",
   "type": "module",
