@@ -2,10 +2,10 @@
   "name": "@moot-inc/objectid-converter",
   "version": "1.1.1",
   "description": "Converts Microsoft Object IDs to and from SIDs.",
-  "main": "bin/src/index.js",
-  "bin": "bin/src/index.js",
+  "main": "bin/src/index.mjs",
+  "type": "module",
   "scripts": {
-    "start": "node ./bin/index.js",
+    "start": "node ./bin/index.mjs",
     "build": "npx tsc",
     "test": "npx mocha",
     "lint": "npx eslint ./"

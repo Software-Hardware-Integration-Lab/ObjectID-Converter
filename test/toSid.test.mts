@@ -1,5 +1,5 @@
-import { convertToObjectId, convertToSid } from '../src';
-import chai from 'chai';
+import { convertToObjectId, convertToSid } from '../src/index.mjs';
+import { expect } from 'chai';
 import { it } from 'mocha';
 import { randomUUID } from 'crypto';
 
@@ -16,9 +16,9 @@ describe('Convert To SID', () => {
             const results = convertToSid(objectIdToTest);
 
             // Check results for hard coded operation
-            chai.expect(results).to.be.a('string');
-            chai.expect(results).to.equal(expectedSid);
-            chai.expect(results).to.be.lengthOf(51);
+            expect(results).to.be.a('string');
+            expect(results).to.equal(expectedSid);
+            expect(results).to.be.lengthOf(51);
 
             // Finish testing section
             done();
@@ -35,9 +35,9 @@ describe('Convert To SID', () => {
             const results = convertToSid(objectIdToTest);
 
             // Check results for hard coded operation
-            chai.expect(results).to.be.a('string');
-            chai.expect(results).to.equal(expectedSid);
-            chai.expect(results).to.be.lengthOf(52);
+            expect(results).to.be.a('string');
+            expect(results).to.equal(expectedSid);
+            expect(results).to.be.lengthOf(52);
 
             // Finish testing section
             done();
@@ -54,9 +54,9 @@ describe('Convert To SID', () => {
             const validationId = convertToObjectId(resultsRandom);
 
             // Check results for a randomly generated SID
-            chai.expect(resultsRandom).to.be.a('string');
-            chai.expect(resultsRandom).length.to.be.lengthOf.below(257);
-            chai.expect(validationId).to.equal(generatedObjectId);
+            expect(resultsRandom).to.be.a('string');
+            expect(resultsRandom).length.to.be.lengthOf.below(257);
+            expect(validationId).to.equal(generatedObjectId);
 
             // Finish testing section
             done();
@@ -65,7 +65,7 @@ describe('Convert To SID', () => {
     describe('Expected Failures', () => {
         it('Reject Invalid Type - Junk String', (done) => {
             // Test Junk String input
-            chai.expect(convertToSid.bind(convertToSid, 'Hello world!')).to.throw('The specified object ID is not a valid UUID v4!');
+            expect(convertToSid.bind(convertToSid, 'Hello world!')).to.throw('The specified object ID is not a valid UUID v4!');
 
             // Finish testing section
             done();
@@ -73,7 +73,7 @@ describe('Convert To SID', () => {
 
         it('Reject Invalid Type - Invalid UUID', (done) => {
             // Test Junk String input
-            chai.expect(convertToSid.bind(convertToSid, 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')).to.throw('The specified object ID is not a valid UUID v4!');
+            expect(convertToSid.bind(convertToSid, 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')).to.throw('The specified object ID is not a valid UUID v4!');
 
             // Finish testing section
             done();
@@ -81,7 +81,7 @@ describe('Convert To SID', () => {
 
         it('Reject Invalid Type - Number', (done) => {
             // @ts-expect-error Test number input
-            chai.expect(convertToSid.bind(convertToSid, 123456)).to.throw('The specified object ID is not a valid UUID v4!');
+            expect(convertToSid.bind(convertToSid, 123456)).to.throw('The specified object ID is not a valid UUID v4!');
 
             // Finish testing section
             done();
@@ -89,7 +89,7 @@ describe('Convert To SID', () => {
 
         it('Reject Invalid Type - Boolean', (done) => {
             // @ts-expect-error Test boolean input
-            chai.expect(convertToSid.bind(convertToSid, true)).to.throw('The specified object ID is not a valid UUID v4!');
+            expect(convertToSid.bind(convertToSid, true)).to.throw('The specified object ID is not a valid UUID v4!');
 
             // Finish testing section
             done();
@@ -97,7 +97,7 @@ describe('Convert To SID', () => {
 
         it('Reject Invalid Type - Regex', (done) => {
             // @ts-expect-error Test Regex input
-            chai.expect(convertToSid.bind(convertToSid, /^something$/gum)).to.throw('The specified object ID is not a valid UUID v4!');
+            expect(convertToSid.bind(convertToSid, /^something$/gum)).to.throw('The specified object ID is not a valid UUID v4!');
 
             // Finish testing section
             done();
@@ -105,7 +105,7 @@ describe('Convert To SID', () => {
 
         it('Reject Invalid Type - Function', (done) => {
             // @ts-expect-error Test Function input
-            chai.expect(convertToSid.bind(convertToSid, () => true)).to.throw('The specified object ID is not a valid UUID v4!');
+            expect(convertToSid.bind(convertToSid, () => true)).to.throw('The specified object ID is not a valid UUID v4!');
 
             // Finish testing section
             done();
@@ -113,7 +113,7 @@ describe('Convert To SID', () => {
 
         it('Reject Invalid Type - Object', (done) => {
             // @ts-expect-error Test Function input
-            chai.expect(convertToSid.bind(convertToSid, { 'hello': 'world!' })).to.throw('The specified object ID is not a valid UUID v4!');
+            expect(convertToSid.bind(convertToSid, { 'hello': 'world!' })).to.throw('The specified object ID is not a valid UUID v4!');
 
             // Finish testing section
             done();
