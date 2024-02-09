@@ -35,6 +35,9 @@ jobs:
   publish-package:
     needs: build-validate
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Download Source Files
