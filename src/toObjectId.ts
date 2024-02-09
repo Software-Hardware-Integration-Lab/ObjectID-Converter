@@ -5,7 +5,7 @@ import { stringify } from 'uuid';
  * @param sid Azure/Entra/M365 Security Identifier to be converted to an Object ID/GUID (UUID v4)
  * @returns Object ID equivalent of the input SID.
  */
-export function convertToObjectId(sid: string): string {
+export default function convertToObjectId(sid: string): string {
     // Input Validation
     if (typeof sid !== 'string') {
         throw new Error('The provided sid is not a string!');

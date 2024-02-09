@@ -5,7 +5,7 @@ import { parse } from 'uuid';
  * @param objectId The Microsoft Object ID (in GUID format) to convert to a SID.
  * @returns A Security Identifier, which is useful in Windows Server AD and Windows.
  */
-export function convertToSid(objectId: string): string {
+export default function convertToSid(objectId: string): string {
     /** Regular expression that matches a UUID version 4 (random). */
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/gui;
 
