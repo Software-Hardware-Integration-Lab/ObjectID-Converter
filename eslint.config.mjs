@@ -30,6 +30,9 @@ export default tseslint.config(
                 'project': true
             }
         },
+        'linterOptions': {
+            'reportUnusedDisableDirectives': true
+        },
         'settings': {
             'jsdoc': {
                 "contexts": [
