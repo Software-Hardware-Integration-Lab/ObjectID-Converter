@@ -1,9 +1,11 @@
 import eslint from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import jsdoc from 'eslint-plugin-jsdoc';
 
 export default tseslint.config(
     eslint.configs.recommended,
+    jsdoc.configs['flat/recommended-typescript'],
     ...tseslint.configs.strictTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     {
@@ -14,6 +16,9 @@ export default tseslint.config(
             '*.guard.ts',
             'eslint.config.mjs'
         ],
+        'plugins': {
+            jsdoc
+        },
         'languageOptions': {
             'globals': {
                 ...globals.mocha,
@@ -25,7 +30,30 @@ export default tseslint.config(
                 'tsconfigRootDir': import.meta.dirname
             }
         },
+        'settings': {
+            'jsdoc': {
+                "contexts": [
+                    "TSInterfaceDeclaration",
+                    "TSMethodSignature",
+                    "TSPropertySignature",
+                    "VariableDeclaration:not(:has(VariableDeclarator[id.type=\"ArrayPattern\"])):not(:has(VariableDeclarator[id.type=\"ObjectPattern\"]))"
+                ]
+            }
+        },
         'rules': {
+            'jsdoc/require-jsdoc': [
+                "warn",
+                {
+                    "require": {
+                        "ArrowFunctionExpression": true,
+                        "ClassDeclaration": true,
+                        "ClassExpression": true,
+                        "FunctionDeclaration": true,
+                        "FunctionExpression": true,
+                        "MethodDefinition": true
+                    }
+                }
+            ],
             "@typescript-eslint/restrict-template-expressions": ["error", { 'allowNumber': true }],
             "@typescript-eslint/explicit-function-return-type": "error",
             "@typescript-eslint/no-misused-promises": [
