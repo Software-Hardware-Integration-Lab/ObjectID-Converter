@@ -18,7 +18,7 @@ jobs:
     - name: Set up the Node.JS Runtime
       uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
 
     - name: Clean Install Dependencies
       run: npm ci
