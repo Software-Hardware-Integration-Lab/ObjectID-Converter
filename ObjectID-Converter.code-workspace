@@ -10,6 +10,23 @@
 		},
 		"editor.formatOnSave": true,
 		"editor.bracketPairColorization.enabled": true,
+		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
+		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
+		"typescript.format.insertSpaceBeforeFunctionParenthesis": false,
+		"typescript.format.semicolons": "insert",
+		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+		"typescript.format.insertSpaceAfterTypeAssertion": true,
+		"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+		"typescript.implementationsCodeLens.enabled": true,
+		"typescript.inlayHints.enumMemberValues.enabled": true,
+		"js/ts.implicitProjectConfig.target": "ES2022",
+		"search.exclude": {
+			"**/*.js": true,
+			"**/*.js.map": true
+		},
+		"files.insertFinalNewline": true,
+		"files.trimFinalNewlines": true,
 		"eslint.experimental.useFlatConfig": true,
 		"cSpell.words": [
 			"Entra"
