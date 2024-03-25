@@ -41,6 +41,9 @@
 			"dbaeumer.vscode-eslint",
 			"eamodio.gitlens",
 			"gruntfuggly.todo-tree",
+			"PKief.material-icon-theme",
+			"SocketSecurity.vscode-socket-security",
+			"eamodio.gitlens"
 		]
 	}
 }
