@@ -9,13 +9,14 @@ export default tseslint.config(
     ...tseslint.configs.strictTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     {
-        'files': ['**/*'],
         'ignores': [
             "bin/",
             "dist/",
-            '*.guard.ts',
+            '**/*.guard.ts',
             'eslint.config.mjs'
-        ],
+        ]
+    },
+    {
         'plugins': {
             jsdoc
         },
@@ -26,8 +27,7 @@ export default tseslint.config(
                 ...globals.es2021
             },
             'parserOptions': {
-                'project': true,
-                'tsconfigRootDir': import.meta.dirname
+                'project': true
             }
         },
         'settings': {
