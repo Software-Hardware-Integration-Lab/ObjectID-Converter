@@ -10,6 +10,7 @@
 		},
 		"editor.formatOnSave": true,
 		"editor.bracketPairColorization.enabled": true,
+		"eslint.experimental.useFlatConfig": true,
 		"cSpell.words": [
 			"Entra"
 		],
