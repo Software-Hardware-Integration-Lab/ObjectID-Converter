@@ -9,6 +9,21 @@
 		"files.exclude": {
 			"node_modules": true
 		},
+		"cSpell.words": [
+			"endregion",
+			"Entra",
+			"fluentui",
+			"Intune",
+			"MDVM",
+			"ODATA",
+			"reduxjs",
+			"SCIM",
+			"SSPR",
+			"Writeback"
+		],
+		"cSpell.enableFiletypes": [
+			"github-actions-workflow"
+		],
 		"editor.formatOnSave": true,
 		"editor.bracketPairColorization.enabled": true,
 		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
@@ -18,10 +33,12 @@
 		"typescript.format.semicolons": "insert",
 		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
 		"typescript.format.insertSpaceAfterTypeAssertion": true,
-		"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
 		"typescript.implementationsCodeLens.enabled": true,
 		"typescript.inlayHints.enumMemberValues.enabled": true,
+		"typescript.preferences.quoteStyle": "single",
+		"javascript.preferences.quoteStyle": "single",
 		"js/ts.implicitProjectConfig.target": "ES2022",
+		"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
 		"search.exclude": {
 			"**/*.js": true,
 			"**/*.js.map": true
@@ -29,18 +46,13 @@
 		"files.insertFinalNewline": true,
 		"files.trimFinalNewlines": true,
 		"eslint.experimental.useFlatConfig": true,
-		"cSpell.words": [
-			"Entra"
-		],
-		"cSpell.enableFiletypes": [
-			"github-actions-workflow"
-		],
+		"yaml.format.singleQuote": true,
+		"powershell.codeFormatting.useConstantStrings": true
 	},
 	"extensions": {
 		"recommendations": [
 			"streetsidesoftware.code-spell-checker",
 			"dbaeumer.vscode-eslint",
-			"eamodio.gitlens",
 			"gruntfuggly.todo-tree",
 			"PKief.material-icon-theme",
 			"SocketSecurity.vscode-socket-security",
