@@ -10,8 +10,8 @@ export default tseslint.config(
     ...tseslint.configs.stylisticTypeChecked,
     {
         'ignores': [
-            "bin/",
-            "dist/",
+            'bin/',
+            'dist/',
             '**/*.guard.ts',
             'eslint.config.mjs'
         ]
@@ -39,7 +39,8 @@ export default tseslint.config(
                     "TSInterfaceDeclaration",
                     "TSMethodSignature",
                     "TSPropertySignature",
-                    "VariableDeclaration:not(:has(VariableDeclarator[id.type=\"ArrayPattern\"])):not(:has(VariableDeclarator[id.type=\"ObjectPattern\"]))"
+                    "VariableDeclaration:not(:has(VariableDeclarator[id.type=\"ArrayPattern\"])):not(:has(VariableDeclarator[id.type=\"ObjectPattern\"])):not(ExportNamedDeclaration > VariableDeclaration):not(ForOfStatement > VariableDeclaration):not(ForInStatement > VariableDeclaration):not(ForStatement > VariableDeclaration)",
+                    "ExportNamedDeclaration:not(:has(VariableDeclarator[id.type=\"ArrayPattern\"])):not(:has(VariableDeclarator[id.type=\"ObjectPattern\"]))"
                 ]
             }
         },
