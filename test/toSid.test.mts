@@ -62,8 +62,9 @@ describe('Convert To SID', () => {
             done();
         });
     });
+
     describe('Expected Failures', () => {
-        it('Reject Invalid Type - Junk String', (done) => {
+        it('Reject Invalid Data - Junk String', (done) => {
             // Test Junk String input
             expect(convertToSid.bind(convertToSid, 'Hello world!')).to.throw('The specified object ID is not a valid UUID v4!');
 
@@ -71,7 +72,7 @@ describe('Convert To SID', () => {
             done();
         });
 
-        it('Reject Invalid Type - Invalid UUID', (done) => {
+        it('Reject Invalid Data - Invalid UUID', (done) => {
             // Test Junk String input
             expect(convertToSid.bind(convertToSid, 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')).to.throw('The specified object ID is not a valid UUID v4!');
 

@@ -64,8 +64,9 @@ describe('Convert To Object ID', () => {
             done();
         });
     });
+
     describe('Expected Failures', () => {
-        it('Reject Invalid Type - Junk String', (done) => {
+        it('Reject Invalid Data - Junk String', (done) => {
             // Test Junk String input
             expect(convertToObjectId.bind(convertToObjectId, 'Hello world!')).to.throw('The provided SID is not an Entra ID SID!');
 
@@ -73,7 +74,7 @@ describe('Convert To Object ID', () => {
             done();
         });
 
-        it('Reject Invalid Type - Invalid SID', (done) => {
+        it('Reject Invalid Data - Invalid SID', (done) => {
             // Test Junk String input
             expect(convertToObjectId.bind(convertToObjectId, 'S-1-5-711957920-1182741761-3248840125-1169651596')).to.throw('The provided SID is not an Entra ID SID!');
 
