@@ -41,19 +41,19 @@
   "author": "Elliot Huffman <elliot_huffman@shi.com>",
   "license": "MIT",
   "dependencies": {
-    "uuid": "^9.0.1"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.14",
+    "@types/chai": "^4.3.16",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.14.2",
     "@types/uuid": "^9.0.8",
-    "chai": "^5.1.0",
+    "chai": "^5.1.1",
     "eslint": "^8.57.0",
-    "eslint-plugin-jsdoc": "^48.2.1",
-    "mocha": "^10.3.0",
-    "typescript": "^5.4.3",
-    "typescript-eslint": "^7.3.1"
+    "eslint-plugin-jsdoc": "^48.2.12",
+    "mocha": "^10.4.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.13.0"
   },
   "mocha": {
     "recursive": true,
