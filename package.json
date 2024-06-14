@@ -29,16 +29,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Moot-Inc/ObjectID-Converter",
+    "url": "https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter",
     "directory": "/"
   },
   "bugs": {
-    "url": "https://github.com/Moot-Inc/ObjectID-Converter/issues"
+    "url": "https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/issues"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "author": "Elliot Huffman <elhuff@mootinc.com>",
+  "author": "Elliot Huffman <elliot_huffman@shi.com>",
   "license": "MIT",
   "dependencies": {
     "uuid": "^9.0.1"
