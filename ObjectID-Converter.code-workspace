@@ -26,6 +26,7 @@
 		],
 		"editor.formatOnSave": true,
 		"editor.bracketPairColorization.enabled": true,
+		"editor.stickyScroll.enabled": true,
 		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
 		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
 		"typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
