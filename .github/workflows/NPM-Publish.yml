@@ -48,7 +48,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-          scope: moot
+          scope: shi-corp
 
       - name: Clean Install All Dependencies
         run: npm ci
@@ -56,7 +56,7 @@ jobs:
       - name: Build Project
         run: npm run-script build:prod
 
-      - name: Clear All But Runtime Dependencies
+      - name: Clear All but Runtime Dependencies
         run: npm ci --omit=dev
 
       - name: Upload Package to NPM Registry
