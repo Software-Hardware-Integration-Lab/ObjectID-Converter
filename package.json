@@ -1,6 +1,6 @@
 {
   "name": "@shi-corp/objectid-converter",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Converts Microsoft Object IDs to and from SIDs.",
   "main": "bin/src/index.mjs",
   "type": "module",
@@ -41,19 +41,19 @@
   "author": "Elliot Huffman <elliot_huffman@shi.com>",
   "license": "MIT",
   "dependencies": {
-    "uuid": "^10.0.0"
+    "uuid": "~10.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.16",
-    "@types/mocha": "^10.0.6",
-    "@types/node": "^20.14.2",
-    "@types/uuid": "^9.0.8",
-    "chai": "^5.1.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-jsdoc": "^48.2.12",
-    "mocha": "^10.4.0",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^7.13.0"
+    "@types/chai": "~4.3.19",
+    "@types/mocha": "~10.0.7",
+    "@types/node": "~22.5.1",
+    "@types/uuid": "~10.0.0",
+    "chai": "~5.1.1",
+    "eslint": "~9.9.1",
+    "eslint-plugin-jsdoc": "~50.2.2",
+    "mocha": "~10.7.3",
+    "typescript": "~5.5.4",
+    "typescript-eslint": "~8.3.0"
   },
   "mocha": {
     "recursive": true,
