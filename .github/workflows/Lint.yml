@@ -1,27 +1,45 @@
-name: Lint Check
+# Display Name of the workflow
+name: Static Analysis - Lint
 
+# When this workflow triggers
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+    # Allows this workflow to be manually run
+    workflow_dispatch:
 
+    # Allow this workflow to be called from another workflow
+    workflow_call:
+
+    # Run the linting checks on every change
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+
+# Define each session of execution that should be executed
 jobs:
-  Lint:
-    runs-on: ubuntu-latest
+    Lint:
+        # Display name of the job
+        name: Lint
 
-    steps:
-    - name: Download Source Code
-      uses: actions/checkout@v4
+        # Operating system filter for the runners
+        runs-on: ubuntu-latest
 
-    - name: Set up the Node.JS Runtime
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE
+            - uses: actions/checkout@v4
 
-    - name: Clean Install Dependencies
-      run: npm ci
+            # Set up NodeJS on the build host
+            - name: Setup Node.js environment
+              uses: actions/setup-node@v4
+              with:
+                node-version: 20.x
+                cache: npm
+                cache-dependency-path: package-lock.json
 
-    - name: Lint the project
-      run: npm run-script lint
+            # Install all of the dependencies
+            - name: Install All of the Project Dependencies
+              run: npm install
+
+            # Lint the Source code to ensure project standardization and best practices
+            - name: Lint Source Code
+              run: npm run-script lint
