@@ -9,7 +9,7 @@
     "build": "tsc",
     "build:prod": "tsc --sourceMap false",
     "test": "mocha",
-    "lint": "eslint ./"
+    "lint": "eslint --max-warnings 0"
   },
   "keywords": [
     "Object ID",

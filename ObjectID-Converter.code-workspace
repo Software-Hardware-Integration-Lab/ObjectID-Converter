@@ -48,7 +48,6 @@
 		},
 		"files.insertFinalNewline": true,
 		"files.trimFinalNewlines": true,
-		"eslint.experimental.useFlatConfig": true,
 		"yaml.format.singleQuote": true,
 		"powershell.codeFormatting.useConstantStrings": true
 	},

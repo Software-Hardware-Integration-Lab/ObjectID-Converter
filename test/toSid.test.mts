@@ -1,4 +1,4 @@
-import { convertToObjectId, convertToSid } from '../src/index.mjs';
+import { convertToObjectId, convertToSid } from '../src/index.js';
 import { expect } from 'chai';
 import { it } from 'mocha';
 import { randomUUID } from 'crypto';
@@ -15,9 +15,13 @@ describe('Convert To SID', () => {
             /** Results fo the hard coded SID conversion. */
             const results = convertToSid(objectIdToTest);
 
-            // Check results for hard coded operation
+            // Check to make ure the results of the conversion is a string
             expect(results).to.be.a('string');
+
+            // Ensure that the result equals the expected SID
             expect(results).to.equal(expectedSid);
+
+            // Ensure that the results are the right length
             expect(results).to.be.lengthOf(51);
 
             // Finish testing section
@@ -34,9 +38,13 @@ describe('Convert To SID', () => {
             /** Results fo the hard coded SID conversion. */
             const results = convertToSid(objectIdToTest);
 
-            // Check results for hard coded operation
+            // Check to make ure the results of the conversion is a string
             expect(results).to.be.a('string');
+
+            // Ensure that the result equals the expected SID
             expect(results).to.equal(expectedSid);
+
+            // Ensure that the results are the right length
             expect(results).to.be.lengthOf(52);
 
             // Finish testing section
@@ -53,9 +61,13 @@ describe('Convert To SID', () => {
             /** ID that should match the generated Object ID. */
             const validationId = convertToObjectId(resultsRandom);
 
-            // Check results for a randomly generated SID
+            // Check to make ure the results of the conversion is a string
             expect(resultsRandom).to.be.a('string');
+
+            // Ensure that the results are the right length
             expect(resultsRandom).length.to.be.lengthOf.below(257);
+
+            // Ensure that the result equals the expected SID
             expect(validationId).to.equal(generatedObjectId);
 
             // Finish testing section

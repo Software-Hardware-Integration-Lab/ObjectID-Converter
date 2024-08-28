@@ -1,4 +1,4 @@
-import { convertToObjectId, convertToSid } from '../src/index.mjs';
+import { convertToObjectId, convertToSid } from '../src/index.js';
 import { expect } from 'chai';
 import { it } from 'mocha';
 import { randomUUID } from 'crypto';
@@ -18,7 +18,11 @@ describe('Convert To Object ID', () => {
 
             // Check results for hard coded operation 1
             expect(results).to.be.a('string');
+
+            // Ensure that the result equals the expected Object ID
             expect(results).to.equal(expectedObjectId);
+
+            // Ensure that the results are the right length
             expect(results).to.be.lengthOf(36);
 
             // Finish testing section
@@ -37,7 +41,11 @@ describe('Convert To Object ID', () => {
 
             // Check results for hard coded operation 2
             expect(results).to.be.a('string');
+
+            // Ensure that the result equals the expected Object ID
             expect(results).to.equal(expectedObjectId);
+
+            // Ensure that the results are the right length
             expect(results).to.be.lengthOf(36);
 
             // Finish testing section
@@ -56,8 +64,14 @@ describe('Convert To Object ID', () => {
 
             // Check results for a randomly generated SID
             expect(resultsRandom).to.be.a('string');
+
+            // Ensure that the result equals the expected Object ID
             expect(resultsRandom).to.be.equal(expectedObjectId);
+
+            // Ensure that the results are the right length
             expect(resultsRandom).to.be.lengthOf(36);
+
+            // Ensure the resultant object ID is a valid UUIDv4
             expect(validate(resultsRandom)).to.equal(true);
 
             // Finish testing section
