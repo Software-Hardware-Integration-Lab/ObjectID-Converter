@@ -12,7 +12,7 @@ Inspiration for this project:
 To convert your Object ID to a SID, use the `convertToSid()` function. It has only one parameter, the ObjectID, it takes a UUIDv4 format string then converts it to an Entra ID (Azure AD) compatible SID.
 
 ``` TypeScript
-import { convertToSid } from '@moot-inc/objectid-converter';
+import { convertToSid } from '@shi-corp/objectid-converter';
 
 /** Object ID that will be converted to a SID. */
 const objectId = 'f82d79af-1278-4894-ac01-d90e30875cf8';
@@ -35,7 +35,7 @@ S-1-12-1-4163729839-1217663608-249102764-4166813488
 To convert your SID to an Object ID, use the `convertToObjectId()` function. It has only one parameter, the SID, it takes an Entra ID (Azure AD) compatible SID string then converts it to an Object ID (UUIDv4).
 
 ``` TypeScript
-import { convertToObjectId } from '@moot-inc/objectid-converter';
+import { convertToObjectId } from '@shi-corp/objectid-converter';
 
 /** Security Identifier (SID) that will be converted to an Object ID. */
 const securityId = 'S-1-12-1-4163729839-1217663608-249102764-4166813488';
