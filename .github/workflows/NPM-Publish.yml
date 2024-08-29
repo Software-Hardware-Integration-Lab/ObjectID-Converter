@@ -10,18 +10,12 @@ on:
 # Define each session of execution that should be executed
 jobs:
   # Execution session that builds the artifacts that are used for deployment
-  Build-Artifact:
+  Test-Artifact:
     # Display name of the job
-    name: Build Artifact
+    name: Test Artifact
 
     # Configures the filter for which operating system that should be used when selecting runners
     runs-on: ubuntu-latest
-
-    # Sets the scopes available to the github_token injected to the GH Actions runner
-    permissions:
-      attestations: write
-      contents: read
-      id-token: write
     
     # Set of commands to run for the build job
     steps:
@@ -61,7 +55,7 @@ jobs:
 
       # Compile the Typescript files to JS
       - name: Build Project in Development Mode
-        run: npm run-script build:Prod
+        run: npm run-script build:Dev
 
       # Run all of the Unit Tests
       - name: Runt Unit Tests
@@ -71,9 +65,44 @@ jobs:
       - name: Run Lint Tests
         run: npm run-script lint
 
-      # Install all of the production only dependencies
-      - name: Clear All but Runtime Dependencies
-        run: npm ci --omit=dev
+  # Execution session that builds the artifacts that are used for deployment
+  Build-Artifact:
+    # Display name of the job
+    name: Build Artifact
+
+    # Configures the filter for which operating system that should be used when selecting runners
+    runs-on: ubuntu-latest
+
+    # Require the build step to complete before running the deployment
+    needs: Test-Artifact
+
+    # Sets the scopes available to the github_token injected to the GH Actions runner
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+    
+    # Set of commands to run for the build job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Clone Repo
+        uses: actions/checkout@v4
+
+      # Set up NodeJS on the build host with caching support to optimize execution
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      # Install all of the dependencies
+      - name: Install All of the Project Dependencies
+        run: npm install
+
+      # Compile the Typescript files to JS
+      - name: Build Project in Development Mode
+        run: npm run-script build:Prod
 
       # Create a ZIP archive of the server files to speed up the upload process
       - name: Zip up Server Files
@@ -103,13 +132,13 @@ jobs:
     # Configures the filter for which operating system that should be used when selecting runners
     runs-on: ubuntu-latest
 
+    # Require the build step to complete before running the deployment
+    needs: Build-Artifact
+
     # Sets the scopes available to the github_token injected to the GH Actions runner
     permissions:
       id-token: write
       contents: none
-
-    # Require the build step to complete before running the deployment
-    needs: Build-Artifact
 
     # The deploy step runs in the Azure environment context
     environment: NPM
