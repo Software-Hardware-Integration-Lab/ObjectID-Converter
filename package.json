@@ -2,10 +2,10 @@
   "name": "@shi-corp/objectid-converter",
   "version": "2.0.7",
   "description": "Converts Microsoft Object IDs to and from SIDs.",
-  "main": "bin/src/index.mjs",
+  "main": "bin/index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./bin/index.mjs",
+    "start": "node ./bin/index.js",
     "build:Dev": "tsc",
     "build:Prod": "tsc --sourceMap false",
     "test:Unit": "mocha",
