@@ -25,6 +25,10 @@ jobs:
     
     # Set of commands to run for the build job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Clone Repo
+        uses: actions/checkout@v4
+
       # Set up NodeJS on the build host with caching support to optimize execution
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -119,8 +123,6 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
           scope: shi-corp
-          cache: npm
-          cache-dependency-path: package-lock.json
 
       # Download the compiled server binary
       - name: Download Artifact From Build Job
