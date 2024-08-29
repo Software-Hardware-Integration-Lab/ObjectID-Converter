@@ -43,8 +43,8 @@ jobs:
 
       # Transpile the TypeScript files to JS
       - name: Build Server
-        run: npm run-script build
+        run: npm run-script build:Dev
 
       # Run the discovered tests against the source code
       - name: Run Tests
-        run: npm run-script test
+        run: npm run-script test:Unit

@@ -10,7 +10,7 @@
             "request": "launch",
             "runtimeArgs": [
                 "run-script",
-                "build"
+                "build:Dev"
             ],
             "runtimeExecutable": "npm",
             "skipFiles": [
@@ -23,9 +23,9 @@
             "request": "launch",
             "runtimeArgs": [
                 "run-script",
-                "test"
+                "test:Unit"
             ],
-            "preLaunchTask": "npm: build",
+            "preLaunchTask": "npm: build:Dev",
             "runtimeExecutable": "npm",
             "skipFiles": [
                 "<node_internals>/**"

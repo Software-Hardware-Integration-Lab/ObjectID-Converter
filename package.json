@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node ./bin/index.mjs",
-    "build": "tsc",
-    "build:prod": "tsc --sourceMap false",
-    "test": "mocha",
+    "build:Dev": "tsc",
+    "build:Prod": "tsc --sourceMap false",
+    "test:Unit": "mocha",
     "lint": "eslint --max-warnings 0"
   },
   "keywords": [

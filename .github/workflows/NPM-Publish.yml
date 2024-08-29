@@ -61,7 +61,7 @@ jobs:
 
       # Compile the Typescript files to JS
       - name: Build Project in Development Mode
-        run: npm run-script build:Dev
+        run: npm run-script build:Prod
 
       # Run all of the Unit Tests
       - name: Runt Unit Tests
