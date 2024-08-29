@@ -1,30 +1,49 @@
-name: Unit Test
+# Display Name of the workflow
+name: Dynamic Analysis - Unit Test
 
+# When this workflow triggers
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
 
+    # Allow this workflow to be called from another workflow
+    workflow_call:
+
+    # Run the unit tests on every change
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+
+# Define each session of execution that should be executed
 jobs:
-  Test:
-    runs-on: ubuntu-latest
+    UnitTest:
+        # Display name of the job
+        name: Unit Test
 
-    steps:
-    - name: Download Source Code
-      uses: actions/checkout@v4
+        # Operating system filter for the runners
+        runs-on: ubuntu-latest
 
-    - name: Set up the Node.JS Runtime
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE
+            - uses: actions/checkout@v4
 
-    - name: Clean Install Dependencies
-      run: npm ci
-      
-    - name: Build Project
-      run: npm run-script build
+            # Set up NodeJS on the build host
+            - name: Setup Node.JS Environment
+              uses: actions/setup-node@v4
+              with:
+                node-version: 20.x
+                cache: npm
+                cache-dependency-path: package-lock.json
 
-    - name: Run the Unit Tests
-      run: npm run-script test
+            # Install all of the dependencies
+            - name: Install All of the Project Dependencies
+              run: npm install
+
+            # Transpile the TypeScript files to JS
+            - name: Build Server
+              run: npm run-script build
+
+            # Run the discovered tests against the source code
+            - name: Run Tests
+              run: npm run-script test

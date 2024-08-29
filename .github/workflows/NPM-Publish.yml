@@ -1,65 +1,139 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
+# Display Name of the workflow
 name: Publish NPM Package
 
+# When this workflow triggers
 on:
+  # Only when a release is published
   release:
     types: [released]
 
+# Define each session of execution that should be executed
 jobs:
-  build-validate:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Download Source Files
-        uses: actions/checkout@v4
+  # Execution session that builds the artifacts that are used for deployment
+  Build-Artifact:
+    # Display name of the job
+    name: Build Artifact
 
-      - name: Setup Node.JS Runtime
+    # Configures the filter for which operating system that should be used when selecting runners
+    runs-on: ubuntu-latest
+
+    # Sets the scopes available to the github_token injected to the GH Actions runner
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+    
+    # Set of commands to run for the build job
+    steps:
+      # Set up NodeJS on the build host with caching support to optimize execution
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: package-lock.json
 
-      - name: Install All Dependencies
-        run: npm ci
+      # Make sure that all of the version numbers align before publishing
+      - name: Ensure Synced Versions
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/}
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          PACKAGE_LOCK_VERSION=$(node -p "require('./package-lock.json').version")
+          echo "Package version: $PACKAGE_VERSION"
+          echo "Package-lock version: $PACKAGE_LOCK_VERSION"
+          echo "Tag version: $TAG_VERSION"
+          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+            echo "Version mismatch between package.json and git tag. Please increment the project before publishing!"
+            exit 1
+          fi
+          if [ "$PACKAGE_LOCK_VERSION" != "$TAG_VERSION" ]; then
+            echo "Version mismatch between package-lock.json and git tag. Please increment the project before publishing!"
+            exit 1
+          fi
 
-      - name: Build Project
-        run: npm run-script build
+      # Install all of the dependencies
+      - name: Install All of the Project Dependencies
+        run: npm install
 
+      # Compile the Typescript files to JS
+      - name: Build Project in Development Mode
+        run: npm run-script build:Dev
+
+      # Run all of the Unit Tests
       - name: Runt Unit Tests
-        run: npm run-script test
+        run: npm run-script test:Unit
 
+      # Run the linter to make sure the project is compliant
       - name: Run Lint Tests
         run: npm run-script lint
 
-  publish-package:
-    needs: build-validate
+      # Install all of the production only dependencies
+      - name: Clear All but Runtime Dependencies
+        run: npm ci --omit=dev
+
+      # Create a ZIP archive of the server files to speed up the upload process
+      - name: Zip up Server Files
+        run: zip -r package.zip bin/ LICENSE README.md package.json
+
+      # Create an attestation for the compiled package and upload it to the internal system for health tracking
+      - name: Attest Compiled Package
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: package.zip
+
+      # Upload compiled zip file so that other execution sessions can use it
+      - name: Upload Artifact for Deployment Job
+        uses: actions/upload-artifact@v4
+        with:
+          compression-level: 9
+          if-no-files-found: error
+          name: ObjectID-Converter
+          path: package.zip
+          retention-days: 1
+
+  # Execution Session that deploys the artifact to NPM
+  Deploy-NPM:
+    # Display name of the job
+    name: Deploy to NPM
+
+    # Configures the filter for which operating system that should be used when selecting runners
     runs-on: ubuntu-latest
+
+    # Sets the scopes available to the github_token injected to the GH Actions runner
     permissions:
       id-token: write
-      contents: read
+      contents: none
 
+    # Require the build step to complete before running the deployment
+    needs: Build-Artifact
+
+    # The deploy step runs in the Azure environment context
+    environment: NPM
+
+    # Set of commands to run for the build job
     steps:
-      - name: Download Source Files
-        uses: actions/checkout@v4
-
+      # Set up NodeJS on the build host with caching support to optimize execution
       - name: Set up Node.JS Runtime
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
           scope: shi-corp
+          cache: npm
+          cache-dependency-path: package-lock.json
 
-      - name: Clean Install All Dependencies
-        run: npm ci
+      # Download the compiled server binary
+      - name: Download Artifact From Build Job
+        uses: actions/download-artifact@v4
+        with:
+          name: ObjectID-Converter
 
-      - name: Build Project
-        run: npm run-script build:prod
+      # Extract the zip file and remove the container
+      - name: Unzip Artifact
+        run: unzip package.zip && rm package.zip
 
-      - name: Clear All but Runtime Dependencies
-        run: npm ci --omit=dev
-
+      # Publish the artifact to NPM with attestation
       - name: Upload Package to NPM Registry
         run: npm publish --access public --provenance
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
