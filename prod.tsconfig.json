@@ -1,0 +1,16 @@
+{
+  // Override the standard build configurations with the below production ready settings
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig to read more about this file */
+    "sourceMap": false, /* Create source map files for emitted JavaScript files. */
+    "removeComments": true, /* Disable emitting comments. */
+    "emitDeclarationOnly": true /* Only output d.ts files and not JavaScript files. */
+  },
+  // Ensure that the build output and test folders are not included in the transpiled output
+  "exclude": [
+    "test/",
+    "bin/"
+  ],
+  // Inherit all of the standard build configurations
+  "extends": "./tsconfig.json"
+}

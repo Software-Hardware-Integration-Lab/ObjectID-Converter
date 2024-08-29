@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node ./bin/index.js",
     "build:Dev": "tsc",
-    "build:Prod": "tsc --sourceMap false",
+    "prebuild:Prod": "tsc -p prod.tsconfig.json --emitDeclarationOnly false",
+    "build:Prod": "tsc -p prod.tsconfig.json --removeComments false",
     "test:Unit": "mocha",
     "lint": "eslint --max-warnings 0"
   },
