@@ -17,33 +17,34 @@ on:
 
 # Define each session of execution that should be executed
 jobs:
-    UnitTest:
-        # Display name of the job
-        name: Unit Test
+  UnitTest:
+    # Display name of the job
+    name: Unit Test
 
-        # Operating system filter for the runners
-        runs-on: ubuntu-latest
+    # Operating system filter for the runners
+    runs-on: ubuntu-latest
 
-        steps:
-            # Checks-out your repository under $GITHUB_WORKSPACE
-            - uses: actions/checkout@v4
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Clone Repo
+        uses: actions/checkout@v4
 
-            # Set up NodeJS on the build host
-            - name: Setup Node.JS Environment
-              uses: actions/setup-node@v4
-              with:
-                node-version: 20.x
-                cache: npm
-                cache-dependency-path: package-lock.json
+      # Set up NodeJS on the build host
+      - name: Setup Node.JS Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: package-lock.json
 
-            # Install all of the dependencies
-            - name: Install All of the Project Dependencies
-              run: npm install
+      # Install all of the dependencies
+      - name: Install All of the Project Dependencies
+        run: npm install
 
-            # Transpile the TypeScript files to JS
-            - name: Build Server
-              run: npm run-script build
+      # Transpile the TypeScript files to JS
+      - name: Build Server
+        run: npm run-script build
 
-            # Run the discovered tests against the source code
-            - name: Run Tests
-              run: npm run-script test
+      # Run the discovered tests against the source code
+      - name: Run Tests
+        run: npm run-script test

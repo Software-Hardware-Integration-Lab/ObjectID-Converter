@@ -3,43 +3,43 @@ name: Static Analysis - Lint
 
 # When this workflow triggers
 on:
-    # Allows this workflow to be manually run
-    workflow_dispatch:
+  # Allows this workflow to be manually run
+  workflow_dispatch:
 
-    # Allow this workflow to be called from another workflow
-    workflow_call:
+  # Allow this workflow to be called from another workflow
+  workflow_call:
 
-    # Run the linting checks on every change
-    push:
-        branches: [ main ]
-    pull_request:
-        branches: [ main ]
+  # Run the linting checks on every change
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 # Define each session of execution that should be executed
 jobs:
-    Lint:
-        # Display name of the job
-        name: Lint
+  Lint:
+    # Display name of the job
+    name: Lint
 
-        # Operating system filter for the runners
-        runs-on: ubuntu-latest
+    # Operating system filter for the runners
+    runs-on: ubuntu-latest
 
-        steps:
-            # Checks-out your repository under $GITHUB_WORKSPACE
-            - uses: actions/checkout@v4
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v4
 
-            # Set up NodeJS on the build host
-            - name: Setup Node.js environment
-              uses: actions/setup-node@v4
-              with:
-                node-version: 20.x
-                cache: npm
-                cache-dependency-path: package-lock.json
+      # Set up NodeJS on the build host
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: package-lock.json
 
-            # Install all of the dependencies
-            - name: Install All of the Project Dependencies
-              run: npm install
+      # Install all of the dependencies
+      - name: Install All of the Project Dependencies
+        run: npm install
 
-            # Lint the Source code to ensure project standardization and best practices
-            - name: Lint Source Code
-              run: npm run-script lint
+      # Lint the Source code to ensure project standardization and best practices
+      - name: Lint Source Code
+        run: npm run-script lint
