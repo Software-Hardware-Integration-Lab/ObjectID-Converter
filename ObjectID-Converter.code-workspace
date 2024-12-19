@@ -23,9 +23,9 @@
 			"SSPR",
 			"Writeback"
 		],
-		"cSpell.enableFiletypes": [
-			"github-actions-workflow"
-		],
+		"cSpell.enabledFileTypes": {
+			"*": true,
+		},
 		"editor.formatOnSave": true,
 		"editor.bracketPairColorization.enabled": true,
 		"editor.stickyScroll.enabled": true,
