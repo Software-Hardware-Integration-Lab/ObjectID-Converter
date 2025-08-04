@@ -164,7 +164,7 @@ jobs:
       - name: Validate Attestation
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: gh attestation verify package.zip --repo Software-Hardware-Integration-Lab/ObjectID-Converter --signer-workflow Software-Hardware-Integration-Lab/ObjectID-Converter/.github/workflows/NPM-Publish.yml@refs/tag/${GITHUB_REF#refs/tags/}
+        run: gh attestation verify package.zip --repo Software-Hardware-Integration-Lab/ObjectID-Converter --signer-workflow Software-Hardware-Integration-Lab/ObjectID-Converter/.github/workflows/NPM-Publish.yml@refs/tags/${GITHUB_REF#refs/tags/}
 
       # Extract the zip file and remove the container
       - name: Unzip Artifact
