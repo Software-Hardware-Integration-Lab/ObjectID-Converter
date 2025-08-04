@@ -27,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
 
@@ -92,7 +92,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
 
@@ -110,7 +110,7 @@ jobs:
 
       # Create an attestation for the compiled package and upload it to the internal system for health tracking
       - name: Attest Compiled Package
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-path: package.zip
 
@@ -137,8 +137,9 @@ jobs:
 
     # Sets the scopes available to the github_token injected to the GH Actions runner
     permissions:
-      id-token: write
+      attestations: read
       contents: none
+      id-token: write
 
     # The deploy step runs in the Azure environment context
     environment: NPM
@@ -150,7 +151,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://registry.npmjs.org/
+          registry-url: https://registry.npmjs.org
           scope: shi-corp
 
       # Download the compiled server binary
@@ -159,34 +160,16 @@ jobs:
         with:
           name: ObjectID-Converter
 
+      # Validate the attestation of the downloaded artifact to prevent tamper
+      - name: Validate Attestation
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: gh attestation verify package.zip --repo Software-Hardware-Integration-Lab/ObjectID-Converter --signer-workflow Software-Hardware-Integration-Lab/ObjectID-Converter/.github/workflows/NPM-Publish.yml@refs/heads/main
+
       # Extract the zip file and remove the container
       - name: Unzip Artifact
         run: unzip package.zip && rm package.zip
 
-        # Log into the Azure fabric with the GitHub federated identity credential (using the OIDC token)
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          enable-AzPSSession: true
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      # Deploys the zip package to the specified azure web app
-      - name: Get NPM Publish Token
-        uses: azure/powershell@v2
-        id: NPM-Publish-Token
-        with:
-          azPSVersion: latest
-          inlineScript: |
-            # Get the publish token from the specified Azure KeyVault
-            [System.String]$PublishToken = Get-AzKeyVaultSecret -VaultName ${{secrets.KEYVAULT_NAME}} -Name ${{secrets.KEYVAULT_SECRET_NAME}} -AsPlainText
-            
-            # Write the token to GitHub Actions Output to be accessible to subsequent steps
-            echo "npmToken=$PublishToken" >> $env:GITHUB_OUTPUT
-
       # Publish the artifact to NPM with attestation
       - name: Upload Package to NPM Registry
-        run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ steps.NPM-Publish-Token.outputs.npmToken }}
+        run: npm publish
