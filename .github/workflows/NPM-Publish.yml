@@ -170,6 +170,10 @@ jobs:
       - name: Unzip Artifact
         run: unzip package.zip && rm package.zip
 
+      # Update the NPM CLI to the latest available version
+      - name: Update NPM CLI
+        run: npm install -g npm
+
       # Publish the artifact to NPM with attestation
       - name: Upload Package to NPM Registry
         run: npm publish
