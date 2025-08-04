@@ -117,7 +117,7 @@ export default tseslint.config(
             'stylistic/computed-property-spacing': 'warn',
             'stylistic/dot-location': 'warn',
             'stylistic/eol-last': 'warn',
-            'stylistic/func-call-spacing': 'warn',
+            'stylistic/function-call-spacing': 'warn',
             'stylistic/function-call-argument-newline': [
                 'warn',
                 'consistent'
