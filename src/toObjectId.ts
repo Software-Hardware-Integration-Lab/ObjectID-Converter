@@ -14,10 +14,10 @@ export function convertToObjectId(sid: string): string {
     }
 
     /** The four parts of the SID. */
-    const splitSid: number[] = sid.
-        replace(/^S-1-12-1-/gum, '').
-        split('-').
-        map((element) => parseInt(element, 10));
+    const splitSid: number[] = sid
+        .replace(/^S-1-12-1-/gum, '')
+        .split('-')
+        .map((element) => parseInt(element, 10));
 
     /** Buffer format of the SID. */
     const sidBuffer = new Uint8Array(new Uint32Array(splitSid).buffer);
