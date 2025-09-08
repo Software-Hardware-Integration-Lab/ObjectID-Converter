@@ -42,7 +42,7 @@
   "author": "Elliot Huffman <elliot_huffman@shi.com>",
   "license": "MIT",
   "dependencies": {
-    "uuid": "~11.1.0"
+    "uuid": "~12.0.0"
   },
   "devDependencies": {
     "@shi-corp/development-utilities": "~1.0.5",
