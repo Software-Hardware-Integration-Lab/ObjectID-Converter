@@ -156,7 +156,7 @@ jobs:
 
       # Download the compiled server binary
       - name: Download Artifact From Build Job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: ObjectID-Converter
 
