@@ -110,7 +110,7 @@ jobs:
 
       # Create an attestation for the compiled package and upload it to the internal system for health tracking
       - name: Attest Compiled Package
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           subject-path: package.zip
 
