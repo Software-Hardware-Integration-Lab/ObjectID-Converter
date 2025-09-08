@@ -21,7 +21,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - name: Clone Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Set up NodeJS on the build host with caching support to optimize execution
       - name: Set up Node.js
@@ -86,7 +86,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - name: Clone Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Set up NodeJS on the build host with caching support to optimize execution
       - name: Set up Node.js
