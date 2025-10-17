@@ -6,6 +6,7 @@
 		}
 	],
 	"settings": {
+		"window.border": "purple",
 		"files.exclude": {
 			"node_modules": true
 		},
