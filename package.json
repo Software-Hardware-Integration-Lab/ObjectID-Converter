@@ -1,6 +1,6 @@
 {
   "name": "@shi-corp/objectid-converter",
-  "version": "2.0.11",
+  "version": "2.0.10",
   "description": "Converts Microsoft Object IDs to and from SIDs.",
   "main": "bin/index.js",
   "type": "module",
