@@ -24,6 +24,10 @@ jobs:
     # Operating system filter for the runners
     runs-on: ubuntu-latest
 
+    # Set explicit least permission
+    permissions:
+      contents: read
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - name: Clone Repo

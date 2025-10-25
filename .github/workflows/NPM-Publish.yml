@@ -17,6 +17,10 @@ jobs:
     # Configures the filter for which operating system that should be used when selecting runners
     runs-on: ubuntu-latest
 
+    # Set explicit least permission
+    permissions:
+      contents: read
+
     # Set of commands to run for the build job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
