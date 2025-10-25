@@ -11,9 +11,9 @@ on:
 
   # Run the linting checks on every change
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 # Define each session of execution that should be executed
 jobs:
@@ -26,15 +26,13 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Set up NodeJS on the build host
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20.x
-          cache: npm
-          cache-dependency-path: package-lock.json
+          node-version: 22
 
       # Install all of the dependencies
       - name: Install All of the Project Dependencies
