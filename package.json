@@ -54,10 +54,10 @@
     "uuid": "~13.0.0"
   },
   "devDependencies": {
-    "@shi-corp/development-utilities": "~1.0.6",
-    "@types/chai": "~5.2.2",
+    "@shi-corp/development-utilities": "~1.1.0",
+    "@types/chai": "~5.2.3",
     "@types/mocha": "~10.0.10",
-    "@types/node": "~24.8.1",
+    "@types/node": "~24.9.1",
     "chai": "~6.2.0",
     "mocha": "~11.7.4",
     "typescript": "~5.9.3"
