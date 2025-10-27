@@ -1,7 +1,7 @@
 {
-  "extends": "@shi-corp/development-utilities/config/baseTsConfig.json",
-  "compilerOptions": {
-    /* Emit */
-    "outDir": "./bin", /* Specify an output folder for all emitted files. */
-  }
+    "extends": "@shi-corp/development-utilities/config/typescript/base.json",
+    "compilerOptions": {
+        /* Emit */
+        "outDir": "./bin", /* Specify an output folder for all emitted files. */
+    }
 }

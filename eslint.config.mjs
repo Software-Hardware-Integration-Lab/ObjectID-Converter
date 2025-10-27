@@ -1,12 +1,4 @@
-import { eslintConfig } from '@shi-corp/development-utilities'
+import { eslintConfig } from '@shi-corp/development-utilities/optimized/lint/base.js'
+import { defineConfig } from 'eslint/config'
 
-export default [
-    ...eslintConfig,
-    {
-        'ignores': [
-            'bin/',
-            'dist/',
-            'eslint.config.mjs'
-        ]
-    }
-]
+export default defineConfig(eslintConfig)
