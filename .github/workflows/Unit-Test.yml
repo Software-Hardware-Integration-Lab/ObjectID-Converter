@@ -31,7 +31,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - name: Clone Repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       # Set up NodeJS on the build host
       - name: Setup Node.JS Environment
