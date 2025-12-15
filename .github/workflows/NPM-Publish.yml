@@ -116,7 +116,7 @@ jobs:
 
       # Upload compiled zip file so that other execution sessions can use it
       - name: Upload Artifact for Deployment Job
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           compression-level: 9
           if-no-files-found: error
