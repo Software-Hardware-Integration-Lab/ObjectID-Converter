@@ -3,5 +3,13 @@
     "compilerOptions": {
         /* Emit */
         "outDir": "./bin", /* Specify an output folder for all emitted files. */
+        "plugins": [
+            {
+                "transform": "typia/lib/transform"
+            }
+        ],
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+        "strict": true
     }
 }
