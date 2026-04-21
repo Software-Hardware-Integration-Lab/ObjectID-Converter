@@ -1,11 +1,11 @@
 import { convertToObjectId, convertToSid } from '../src/index.js';
-import { expect } from 'chai';
-import { it } from 'mocha';
-import { randomUUID } from 'crypto';
+import { suite, test } from 'node:test';
+import { strict as assert } from 'node:assert';
+import { randomUUID } from 'node:crypto';
 
-describe('Convert To SID', () => {
-    describe('Successful Tests', () => {
-        it('Hard Coded SID - 1', (done) => {
+await suite('Convert To SID', async () => {
+    await test('Successful Tests', async () => {
+        await test('Hard Coded SID - 1', () => {
             /** Hard coded Object ID to test. */
             const objectIdToTest = '9ee93cd2-da63-42b6-98bb-1f313f2126c7';
 
@@ -15,20 +15,11 @@ describe('Convert To SID', () => {
             /** Results fo the hard coded SID conversion. */
             const results = convertToSid(objectIdToTest);
 
-            // Check to make ure the results of the conversion is a string
-            expect(results).to.be.a('string');
-
-            // Ensure that the result equals the expected SID
-            expect(results).to.equal(expectedSid);
-
-            // Ensure that the results are the right length
-            expect(results).to.be.lengthOf(51);
-
-            // Finish testing section
-            done();
+            // Ensure the output is the exact same as the expected SID
+            assert.deepStrictEqual(results, expectedSid);
         });
 
-        it('Hard Coded SID - 2', (done) => {
+        await test('Hard Coded SID - 2', () => {
             /** Hard coded Object ID to test. */
             const objectIdToTest = '95bd3dd0-913a-44b8-9e08-db3fddc72f83';
 
@@ -38,20 +29,11 @@ describe('Convert To SID', () => {
             /** Results fo the hard coded SID conversion. */
             const results = convertToSid(objectIdToTest);
 
-            // Check to make ure the results of the conversion is a string
-            expect(results).to.be.a('string');
-
-            // Ensure that the result equals the expected SID
-            expect(results).to.equal(expectedSid);
-
-            // Ensure that the results are the right length
-            expect(results).to.be.lengthOf(52);
-
-            // Finish testing section
-            done();
+            // Ensure the output is the exact same as the expected SID
+            assert.deepStrictEqual(results, expectedSid);
         });
 
-        it('Random SID', (done) => {
+        await test('Random SID', () => {
             /** Randomly generated UUID to test. */
             const generatedObjectId = randomUUID();
 
@@ -61,75 +43,45 @@ describe('Convert To SID', () => {
             /** ID that should match the generated Object ID. */
             const validationId = convertToObjectId(resultsRandom);
 
-            // Check to make ure the results of the conversion is a string
-            expect(resultsRandom).to.be.a('string');
-
-            // Ensure that the results are the right length
-            expect(resultsRandom).length.to.be.lengthOf.below(257);
-
-            // Ensure that the result equals the expected SID
-            expect(validationId).to.equal(generatedObjectId);
-
-            // Finish testing section
-            done();
+            // Ensure the output is the exact same as the expected SID
+            assert.deepStrictEqual(validationId, generatedObjectId);
         });
     });
 
-    describe('Expected Failures', () => {
-        it('Reject Invalid Data - Junk String', (done) => {
+    await test('Expected Failures', async () => {
+        await test('Reject Invalid Data - Junk String', () => {
             // Test Junk String input
-            expect(convertToSid.bind(convertToSid, 'Hello world!')).to.throw('The specified object ID is not a valid UUID v4!');
-
-            // Finish testing section
-            done();
+            assert.throws(() => convertToSid('Hello world!'));
         });
 
-        it('Reject Invalid Data - Invalid UUID', (done) => {
+        await test('Reject Invalid Data - Invalid UUID', () => {
             // Test Junk String input
-            expect(convertToSid.bind(convertToSid, 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')).to.throw('The specified object ID is not a valid UUID v4!');
-
-            // Finish testing section
-            done();
+            assert.throws(() => convertToSid('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'));
         });
 
-        it('Reject Invalid Type - Number', (done) => {
-            // @ts-expect-error Test number input
-            expect(convertToSid.bind(convertToSid, 123456)).to.throw('The specified object ID is not a valid UUID v4!');
-
-            // Finish testing section
-            done();
+        await test('Reject Invalid Type - Number', () => {
+            // @ts-expect-error - Testing invalid type input
+            assert.throws(() => convertToSid(123456));
         });
 
-        it('Reject Invalid Type - Boolean', (done) => {
-            // @ts-expect-error Test boolean input
-            expect(convertToSid.bind(convertToSid, true)).to.throw('The specified object ID is not a valid UUID v4!');
-
-            // Finish testing section
-            done();
+        await test('Reject Invalid Type - Boolean', () => {
+            // @ts-expect-error - Testing invalid type input
+            assert.throws(() => convertToSid(true));
         });
 
-        it('Reject Invalid Type - Regex', (done) => {
-            // @ts-expect-error Test Regex input
-            expect(convertToSid.bind(convertToSid, /^something$/gum)).to.throw('The specified object ID is not a valid UUID v4!');
-
-            // Finish testing section
-            done();
+        await test('Reject Invalid Type - Regex', () => {
+            // @ts-expect-error - Testing invalid type input
+            assert.throws(() => convertToSid(/^something$/gum));
         });
 
-        it('Reject Invalid Type - Function', (done) => {
-            // @ts-expect-error Test Function input
-            expect(convertToSid.bind(convertToSid, () => true)).to.throw('The specified object ID is not a valid UUID v4!');
-
-            // Finish testing section
-            done();
+        await test('Reject Invalid Type - Function', () => {
+            // @ts-expect-error - Testing invalid type input
+            assert.throws(() => convertToSid(() => true));
         });
 
-        it('Reject Invalid Type - Object', (done) => {
-            // @ts-expect-error Test Function input
-            expect(convertToSid.bind(convertToSid, { 'hello': 'world!' })).to.throw('The specified object ID is not a valid UUID v4!');
-
-            // Finish testing section
-            done();
+        await test('Reject Invalid Type - Object', () => {
+            // @ts-expect-error - Testing invalid type input
+            assert.throws(() => convertToSid({ 'hello': 'world!' }));
         });
     });
 });

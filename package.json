@@ -9,7 +9,7 @@
         "build:Dev": "tsc",
         "prebuild:Prod": "tsc -p prod.tsconfig.json --emitDeclarationOnly false",
         "build:Prod": "tsc -p prod.tsconfig.json --removeComments false",
-        "test:Unit": "mocha",
+        "test:Unit": "node --experimental-test-module-mocks --test bin/test/unit/**/*.test.js",
         "lint": "eslint --max-warnings 0",
         "prepare": "ts-patch install"
     },
@@ -57,9 +57,7 @@
     },
     "devDependencies": {
         "@shi-corp/development-utilities": "~2.2.0",
-        "@types/chai": "~5.2.3",
         "@types/node": "~25.6.0",
-        "chai": "~6.2.2",
         "ts-patch": "~3.3.0",
         "typescript": "~5.9.3"
     }
