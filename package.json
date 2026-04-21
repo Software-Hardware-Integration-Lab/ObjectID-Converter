@@ -10,7 +10,8 @@
         "prebuild:Prod": "tsc -p prod.tsconfig.json --emitDeclarationOnly false",
         "build:Prod": "tsc -p prod.tsconfig.json --removeComments false",
         "test:Unit": "mocha",
-        "lint": "eslint --max-warnings 0"
+        "lint": "eslint --max-warnings 0",
+        "prepare": "ts-patch install"
     },
     "keywords": [
         "Object ID",
@@ -28,7 +29,7 @@
         "SID",
         "GUID"
     ],
-    "packageManager": "npm@11.9.0",
+    "packageManager": "npm@11.12.1",
     "devEngines": {
         "runtime": {
             "name": "node",
@@ -51,20 +52,15 @@
     "author": "Elliot Huffman <elliot_huffman@shi.com>",
     "license": "MIT",
     "dependencies": {
-        "uuid": "~13.0.0"
+        "typia": "~12.0.2",
+        "uuid": "~14.0.0"
     },
     "devDependencies": {
         "@shi-corp/development-utilities": "~2.2.0",
         "@types/chai": "~5.2.3",
-        "@types/mocha": "~10.0.10",
-        "@types/node": "~25.2.2",
+        "@types/node": "~25.6.0",
         "chai": "~6.2.2",
-        "mocha": "~11.7.5",
+        "ts-patch": "~3.3.0",
         "typescript": "~5.9.3"
-    },
-    "mocha": {
-        "recursive": true,
-        "spec": "bin/test/",
-        "color": true
     }
 }
