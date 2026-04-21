@@ -1,4 +1,4 @@
-import { convertToObjectId, convertToSid } from '../src/index.js';
+import { convertToObjectId, convertToSid } from '../../src/index.js';
 import { equals, type tags } from 'typia';
 import { suite, test } from 'node:test';
 import { strict as assert } from 'node:assert';

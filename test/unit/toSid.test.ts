@@ -1,4 +1,4 @@
-import { convertToObjectId, convertToSid } from '../src/index.js';
+import { convertToObjectId, convertToSid } from '../../src/index.js';
 import { suite, test } from 'node:test';
 import { strict as assert } from 'node:assert';
 import { randomUUID } from 'node:crypto';
