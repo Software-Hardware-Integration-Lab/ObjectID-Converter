@@ -1,3 +1,4 @@
+import { assertGuardEquals, type tags } from 'typia';
 import { parse } from 'uuid';
 
 /**
@@ -5,15 +6,10 @@ import { parse } from 'uuid';
  * @param objectId The Microsoft Object ID (in GUID format) to convert to a SID.
  * @returns A Security Identifier, which is useful in Windows Server AD and Windows.
  */
-export function convertToSid(objectId: string): string {
-    /** Regular expression that matches a UUID version 4 (random). */
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/gui;
-
-    // Check if the provided input is a valid Object ID
-    if (typeof objectId !== 'string' || !uuidRegex.test(objectId)) {
-        // Throw an error if it is not a valid UUID
-        throw new Error('The specified object ID is not a valid UUID v4!');
-    }
+export function convertToSid(objectId: string & tags.Format<'uuid'>): string {
+    // #region Input Validation
+    assertGuardEquals(objectId);
+    // #endregion Input Validation
 
     /** Array of bytes that represents the Object ID's parsed UUID format. */
     const bytes = [...parse(objectId)];

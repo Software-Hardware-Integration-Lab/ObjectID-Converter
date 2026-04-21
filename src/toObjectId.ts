@@ -1,3 +1,4 @@
+import { assertGuardEquals } from 'typia';
 import { stringify } from 'uuid';
 
 /**
@@ -6,12 +7,15 @@ import { stringify } from 'uuid';
  * @returns Object ID equivalent of the input SID.
  */
 export function convertToObjectId(sid: string): string {
+    // #region Input Validation
+    assertGuardEquals(sid);
+
+    /** Regular expression to match a valid cloud (Entra ID) SID. */
+    const sidMatcher = /^S-1-12-1-\d{8,10}-\d{8,10}-\d{8,10}-\d{8,10}$/gum;
+
     // Input Validation
-    if (typeof sid !== 'string') {
-        throw new Error('The provided sid is not a string!');
-    } else if (!sid.match(/^S-1-12-1-\d{8,10}-\d{8,10}-\d{8,10}-\d{8,10}$/gum)) {
-        throw new Error('The provided SID is not an Entra ID SID!');
-    }
+    if (sid.match(sidMatcher) === null) { throw new TypeError('The provided SID is not an Entra ID SID!', { 'cause': 'Input validation!' }); }
+    // #endregion Input Validation
 
     /** The four parts of the SID. */
     const splitSid: number[] = sid
