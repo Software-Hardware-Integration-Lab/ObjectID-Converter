@@ -3,50 +3,50 @@ name: Dynamic Analysis - Unit Test
 
 # When this workflow triggers
 on:
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
 
-  # Allow this workflow to be called from another workflow
-  workflow_call:
+    # Allow this workflow to be called from another workflow
+    workflow_call:
 
-  # Run the unit tests on every change
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    # Run the unit tests on every change
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
 
 # Define each session of execution that should be executed
 jobs:
-  UnitTest:
-    # Display name of the job
-    name: Unit Test
+    UnitTest:
+        # Display name of the job
+        name: Unit Test
 
-    # Operating system filter for the runners
-    runs-on: ubuntu-latest
+        # Operating system filter for the runners
+        runs-on: ubuntu-latest
 
-    # Set explicit least permission
-    permissions:
-      contents: read
+        # Set explicit least permission
+        permissions:
+            contents: read
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE
-      - name: Clone Repo
-        uses: actions/checkout@v5
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE
+            - name: Clone Repo
+              uses: actions/checkout@v6
 
-      # Set up NodeJS on the build host
-      - name: Setup Node.JS Environment
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
+            # Set up NodeJS on the build host
+            - name: Setup Node.JS Environment
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24
 
-      # Install all of the dependencies
-      - name: Install All of the Project Dependencies
-        run: npm install
+            # Install all of the dependencies
+            - name: Install All of the Project Dependencies
+              run: npm install
 
-      # Transpile the TypeScript files to JS
-      - name: Build Server
-        run: npm run-script build:Dev
+            # Transpile the TypeScript files to JS
+            - name: Build Server
+              run: npm run-script build:Dev
 
-      # Run the discovered tests against the source code
-      - name: Run Tests
-        run: npm run-script test:Unit
+            # Run the discovered tests against the source code
+            - name: Run Tests
+              run: npm run-script test:Unit
