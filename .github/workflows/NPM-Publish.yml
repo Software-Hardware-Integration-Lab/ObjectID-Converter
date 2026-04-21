@@ -175,6 +175,10 @@ jobs:
             - name: Update NPM CLI
               run: npm install -g npm
 
+            # Typia Requires the Dev Deps (TS-Patch) to be installed to publish the package
+            - name: Install Dependencies
+              run: npm install
+
             # Publish the artifact to NPM with attestation
             - name: Upload Package to NPM Registry
               run: npm publish
