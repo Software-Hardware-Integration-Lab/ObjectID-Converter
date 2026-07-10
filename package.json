@@ -1,6 +1,6 @@
 {
-    "name": "@shi-corp/objectid-converter",
-    "version": "2.1.1",
+    "name": "@software-hardware-integration-lab/objectid-converter",
+    "version": "2.1.2",
     "description": "Converts Microsoft Object IDs to and from SIDs.",
     "main": "bin/index.js",
     "type": "module",
@@ -29,11 +29,11 @@
         "SID",
         "GUID"
     ],
-    "packageManager": "npm@11.12.1",
+    "packageManager": "npm@12.0.0",
     "devEngines": {
         "runtime": {
             "name": "node",
-            "version": ">=22.17.0",
+            "version": ">=24.18.0",
             "onFail": "error"
         },
         "packageManager": {
@@ -43,8 +43,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter.git",
-        "directory": "/"
+        "url": "git+https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter.git"
     },
     "bugs": {
         "url": "https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/issues"
@@ -52,12 +51,12 @@
     "author": "Elliot Huffman <elliot_huffman@shi.com>",
     "license": "MIT",
     "dependencies": {
-        "typia": "~12.0.2",
-        "uuid": "~14.0.0"
+        "typia": "~12.1.1",
+        "uuid": "~14.0.1"
     },
     "devDependencies": {
         "@shi-corp/development-utilities": "~2.2.0",
-        "@types/node": "~25.6.0",
+        "@types/node": "~26.1.1",
         "ts-patch": "~3.3.0",
         "typescript": "~5.9.3"
     },
@@ -220,5 +219,8 @@
         "which-boxed-primitive": "npm:@socketregistry/which-boxed-primitive@^1",
         "which-collection": "npm:@socketregistry/which-collection@^1",
         "which-typed-array": "npm:@socketregistry/which-typed-array@^1"
+    },
+    "allowScripts": {
+        "unrs-resolver@1.12.2": true
     }
 }
