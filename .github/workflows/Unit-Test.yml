@@ -11,9 +11,9 @@ on:
 
     # Run the unit tests on every change
     push:
-        branches: [ main ]
+        branches: [main]
     pull_request:
-        branches: [ main ]
+        branches: [main]
 
 # Define each session of execution that should be executed
 jobs:
@@ -31,22 +31,35 @@ jobs:
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE
             - name: Clone Repo
-              uses: actions/checkout@v6
+              uses: actions/checkout@v7
+              background: true
 
             # Set up NodeJS on the build host
             - name: Setup Node.JS Environment
               uses: actions/setup-node@v6
+              background: true
               with:
                   node-version: 24
 
+            # Set up the socket firewall binary
+            - name: Install - Socket Firewall
+              uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f
+              background: true
+              with:
+                  mode: firewall-free
+
+            # Bring job back to sync execution by awaiting for all async jobs to finish before continuing
+            - name: Steps - Convert Back To Synchronous Execution - Environment Setup
+              wait-all: true
+
             # Install all of the dependencies
             - name: Install All of the Project Dependencies
-              run: npm install
+              run: sfw npm ci
 
             # Transpile the TypeScript files to JS
             - name: Build Server
-              run: npm run-script build:Dev
+              run: npm run build:Dev
 
             # Run the discovered tests against the source code
             - name: Run Tests
-              run: npm run-script test:Unit
+              run: npm run test:Unit
