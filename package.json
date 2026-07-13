@@ -51,7 +51,7 @@
     "author": "Elliot Huffman <elliot_huffman@shi.com>",
     "license": "MIT",
     "dependencies": {
-        "typia": "~12.1.1",
+        "typia": "~13.0.2",
         "uuid": "~14.0.1"
     },
     "devDependencies": {
