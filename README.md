@@ -1,4 +1,4 @@
-# ObjectID Converter [![Unit Test](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Unit-Test.yml/badge.svg)](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Unit-Test.yml) [![Lint Check](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Lint.yml/badge.svg)](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Lint.yml) [![CodeQL](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/github-code-scanning/codeql) [![NPM Version](https://img.shields.io/npm/v/%40shi-corp%2Fobjectid-converter)](https://www.npmjs.com/package/@shi-corp/objectid-converter)
+# ObjectID Converter [![Unit Test](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Test-Unit.yml/badge.svg)](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Test-Unit.yml) [![Lint Check](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Lint.yml/badge.svg)](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/Lint.yml) [![CodeQL](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Software-Hardware-Integration-Lab/ObjectID-Converter/actions/workflows/github-code-scanning/codeql) [![NPM Version](https://img.shields.io/npm/v/%40software-hardware-integration-lab%2Fobjectid-converter)](<https://www.npmjs.com/package/@software-hardware-integration-lab/objectid-converter>)
 
 This project is a TypeScript native implementation of the Microsoft's cloud Object ID to Security Identifier (SID) process.
 
@@ -12,7 +12,7 @@ Inspiration for this project:
 To convert your Object ID to a SID, use the `convertToSid()` function. It has only one parameter, the ObjectID, it takes a UUIDv4 format string then converts it to an Entra ID (Azure AD) compatible SID.
 
 ``` TypeScript
-import { convertToSid } from '@shi-corp/objectid-converter';
+import { convertToSid } from '@software-hardware-integration-lab/objectid-converter';
 
 /** Object ID that will be converted to a SID. */
 const objectId = 'f82d79af-1278-4894-ac01-d90e30875cf8';
@@ -26,7 +26,7 @@ console.log(results);
 
 ### SID Result
 
-``` text
+```text
 S-1-12-1-4163729839-1217663608-249102764-4166813488
 ```
 
@@ -49,6 +49,6 @@ console.log(results);
 
 ### Object ID Result
 
-``` text
+```text
 f82d79af-1278-4894-ac01-d90e30875cf8
 ```
