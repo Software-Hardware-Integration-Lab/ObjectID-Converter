@@ -10,6 +10,7 @@
 
 # production
 /bin
+*.tgz
 
 # API boilerplate auto generated code
 /src/store/api/*

@@ -5,4 +5,5 @@ bin/test
 .vscode
 .github
 *.code-workspace
-tsconfig.json
+*tsconfig*.json
+*eslint*
