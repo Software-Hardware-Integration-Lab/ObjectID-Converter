@@ -58,7 +58,7 @@
         "@shi-corp/development-utilities": "~2.2.0",
         "@types/node": "~26.1.1",
         "ts-patch": "~3.3.0",
-        "typescript": "~5.9.3"
+        "typescript": "~7.0.2"
     },
     "overrides": {
         "array-buffer-byte-length": "npm:@socketregistry/array-buffer-byte-length@^1",
