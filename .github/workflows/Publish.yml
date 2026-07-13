@@ -5,7 +5,7 @@ name: Publish NPM Package
 on:
     # Only when a release is published
     release:
-        types: [released]
+        types: [published]
 
 # Define each session of execution that should be executed
 jobs:
