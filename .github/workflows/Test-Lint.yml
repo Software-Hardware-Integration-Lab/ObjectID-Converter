@@ -61,4 +61,4 @@ jobs:
 
             # Lint the Source code to ensure project standardization and best practices
             - name: Lint Source Code
-              run: npm run-script lint
+              run: npm run lint
