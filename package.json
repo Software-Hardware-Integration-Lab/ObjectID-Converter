@@ -1,6 +1,6 @@
 {
     "name": "@software-hardware-integration-lab/objectid-converter",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "description": "Converts Microsoft Object IDs to and from SIDs.",
     "main": "bin/index.js",
     "type": "module",
