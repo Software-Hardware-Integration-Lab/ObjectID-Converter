@@ -1,0 +1,132 @@
+# Display Name of the workflow
+name: Build - Object ID Converter
+
+# Event listeners for when the job should start execution
+on:
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
+    # Run the build checks on every change
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+    # Allow this workflow to be called from another workflow
+    workflow_call:
+        inputs:
+            correlationId:
+                description: 'Correlates the origin job with the child instance since process start does not return an ID.'
+                type: string
+                required: false
+
+# Define each session of execution that should be executed
+jobs:
+    # Execution session that calculates the metadata for the build and makes it available to downstream jobs through outputs
+    Metadata:
+        # Human friendly name of the job
+        name: Calculate - Metadata
+
+        # Grant the required permissions to run the job
+        permissions:
+            contents: read
+
+        # Execute the workflow
+        uses: ./.github/workflows/Metadata.yml
+
+    # Execution session that builds the artifacts that are used for deployment
+    Build-Prod:
+        # Display name of the job
+        name: Build - Object ID Converter
+
+        # Configures the filter for which operating system that should be used when selecting runners
+        runs-on: ubuntu-latest
+
+        # Ensure dependant jobs have completed before running this job
+        needs: [Metadata]
+
+        # Sets the scopes available to the github_token injected to the GH Actions runner
+        permissions:
+            attestations: write
+            contents: read
+            id-token: write
+            packages: write
+
+        # Set of steps to execute to build and capture the static HTML
+        steps:
+            # Used to uniquely identify the specific call to correlate the calling entity with the cross repo build
+            - name: ${{ github.event.inputs.correlationId }}
+              id: correlationId
+              background: true
+              run: echo run identifier ${{ inputs.correlationId }}
+
+            # Grab the source code from the repo
+            - name: Checkout Files from Repo
+              background: true
+              uses: actions/checkout@v7
+
+            # Enable Node.JS in the build environment
+            - name: Install - Node.JS Runtime
+              uses: actions/setup-node@v6
+              background: true
+              with:
+                  node-version: 24
+                  registry-url: https://npm.pkg.github.com
+                  scope: software-hardware-integration-lab
+
+            # Set up the socket firewall binary
+            - name: Install - Socket Firewall
+              uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f
+              background: true
+              with:
+                  mode: firewall-free
+
+            # Bring job back to sync execution by awaiting for all async jobs to finish before continuing
+            - name: Steps - Convert Back To Synchronous Execution - Environment Setup
+              wait-all: true
+
+            # Update the NPM CLI to the latest available version
+            - name: Update NPM CLI
+              run: sfw npm install -g npm
+
+            # Installs the dependencies for building the project
+            - name: Install - Dependencies
+              run: sfw npm ci
+
+            # Cryptographically attest that packages haven't been tampered where supported
+            - name: Attest Dependency Provenance
+              run: npm audit signatures
+
+            # Update the version of SHIELD being uploaded to have a different version number to avoid SDG version conflict
+            - name: Tattoo Version - Experimental Channel
+              if: ${{ needs.Metadata.outputs.channel != 'stable' }}
+              run: npm version --no-commit-hooks --no-git-tag-version "${{ needs.Metadata.outputs.version }}-${{ needs.Metadata.outputs.channel }}.${{ needs.Metadata.outputs.shortSha }}"
+
+            # Compile the project
+            - name: Build the Project
+              run: npm run-script build:Prod
+
+            # Publish the artifact to NPM with attestation
+            - name: Upload Package to NPM Registry
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: npm publish --tag ${{ needs.Metadata.outputs.channel }}
+
+            # Generate the NPM package for beta and stable publishing, if required
+            - name: Generate NPM Package
+              id: generate-package
+              run: echo "package-file=$(npm pack --ignore-scripts)" >> "$GITHUB_OUTPUT"
+
+            # Create an attestation for the generated NPM package to ensure integrity and authenticity
+            - name: Attest NPM Package
+              uses: actions/attest@v4
+              with:
+                  subject-path: ${{ steps.generate-package.outputs.package-file }}
+
+            # Upload the compiled HTML as an artifact for future consumption
+            - name: Upload a Build Artifact
+              uses: actions/upload-artifact@v7
+              with:
+                  name: NPM-Package
+                  if-no-files-found: error
+                  path: ${{ steps.generate-package.outputs.package-file }}
