@@ -1,0 +1,109 @@
+# Display Name of the workflow
+name: Publish NPM Package
+
+# When this workflow triggers
+on:
+    # Only when a release is published
+    release:
+        types: [released]
+
+# Define each session of execution that should be executed
+jobs:
+    # Execution session that calculates the metadata for the build and makes it available to downstream jobs through outputs
+    Metadata:
+        # Human friendly name of the job
+        name: Calculate - Metadata
+
+        # Grant the required permissions to run the job
+        permissions:
+            contents: read
+
+        # Execute the workflow
+        uses: ./.github/workflows/Metadata.yml
+
+    Build:
+        # Human friendly name of the job
+        name: Build - Production
+
+        # Grant the required permissions to run the job
+        permissions:
+            attestations: write
+            contents: read
+            id-token: write
+            packages: write
+
+        # Execute the workflow
+        uses: ./.github/workflows/Build.yml
+
+    # Execution Session that deploys the artifact to NPM
+    Deploy-NPM:
+        # Display name of the job
+        name: Deploy to NPM
+
+        # Configures the filter for which operating system that should be used when selecting runners
+        runs-on: ubuntu-slim
+
+        # Require the build step to complete before running the deployment
+        needs: [Metadata, Build]
+
+        # Sets the scopes available to the github_token injected to the GH Actions runner
+        permissions:
+            attestations: read
+            contents: none
+            id-token: write
+
+        # The deploy step runs in the NPM OIDC authorized context
+        environment: NPM-OIDC
+
+        # Set of commands to run for the build job
+        steps:
+            # Set up NodeJS on the build host with caching support to optimize execution
+            - name: Set up Node.JS Runtime
+              uses: actions/setup-node@v6
+              background: true
+              with:
+                  node-version: 24
+                  scope: software-hardware-integration-lab
+
+            # Download the compiled server binary
+            - name: Download Artifact From Build Job
+              uses: actions/download-artifact@v8
+              background: true
+              with:
+                  name: NPM-Package
+
+            # Set up the socket firewall binary
+            - name: Install - Socket Firewall
+              uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f
+              background: true
+              with:
+                  mode: firewall-free
+
+            # Bring job back to sync execution by awaiting for all async jobs to finish before continuing
+            - name: Steps - Convert Back To Synchronous Execution - Environment Setup
+              wait-all: true
+
+            # Validate the attestation of the downloaded artifact to prevent tamper
+            - name: Validate Attestation
+              background: true
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: gh attestation verify ${{ needs.Build.outputs.packageName }} --repo Software-Hardware-Integration-Lab/ObjectID-Converter --signer-workflow Software-Hardware-Integration-Lab/ObjectID-Converter/.github/workflows/Build.yml@${{ github.event_name == 'release' && format('refs/tags/{0}', github.ref_name) || 'refs/heads/main' }}
+
+            # Update the NPM CLI to the latest available version
+            - name: Update NPM CLI
+              background: true
+              run: sfw npm install -g npm
+
+            # Bring job back to sync execution by awaiting for all async jobs to finish before continuing
+            - name: Steps - Convert Back To Synchronous Execution - Publish Prep
+              wait-all: true
+
+            # Publish the artifact to NPM with attestation
+            - name: Upload Package to NPM Registry
+              run: |
+                  if [ "${{ github.event_name }}" = "release" ] && [ "${{ github.event.release.prerelease }}" = "true" ]; then
+                    npm publish ${{ needs.Build.outputs.packageName }} --tag=${{ needs.Metadata.outputs.channel }} --ignore-scripts
+                  elif [ "${{ github.event_name }}" = "release" ]; then
+                    npm publish ${{ needs.Build.outputs.packageName }} --ignore-scripts
+                  fi
