@@ -1,5 +1,5 @@
 # Display Name of the workflow
-name: Build - Object ID Converter
+name: Build - Production
 
 # Event listeners for when the job should start execution
 on:
@@ -19,6 +19,10 @@ on:
                 description: 'Correlates the origin job with the child instance since process start does not return an ID.'
                 type: string
                 required: false
+        outputs:
+            packageName:
+                description: 'The name of the generated NPM package.'
+                value: ${{ jobs.Build-Prod.outputs.packageName }}
 
 # Define each session of execution that should be executed
 jobs:
@@ -51,6 +55,10 @@ jobs:
             contents: read
             id-token: write
             packages: write
+
+        # Content that can be reused across multiple workflows to avoid duplication of code and logic
+        outputs:
+            packageName: ${{ steps.generate-package.outputs.package-file }}
 
         # Set of steps to execute to build and capture the static HTML
         steps:
