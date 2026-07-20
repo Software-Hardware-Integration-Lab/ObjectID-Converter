@@ -75,7 +75,7 @@ jobs:
 
             # Enable Node.JS in the build environment
             - name: Install - Node.JS Runtime
-              uses: actions/setup-node@v6
+              uses: actions/setup-node@v7
               background: true
               with:
                   node-version: 24
