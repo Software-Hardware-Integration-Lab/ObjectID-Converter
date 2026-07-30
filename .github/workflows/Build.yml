@@ -79,8 +79,6 @@ jobs:
               background: true
               with:
                   node-version: 24
-                  registry-url: https://npm.pkg.github.com
-                  scope: software-hardware-integration-lab
 
             # Set up the socket firewall binary
             - name: Install - Socket Firewall
@@ -113,6 +111,15 @@ jobs:
             # Compile the project
             - name: Build the Project
               run: npm run-script build:Prod
+
+            # Enable Node.JS in the build environment
+            - name: Install - Node.JS Runtime
+              uses: actions/setup-node@v6
+              background: true
+              with:
+                  node-version: 24
+                  registry-url: https://npm.pkg.github.com
+                  scope: software-hardware-integration-lab
 
             # Publish the artifact to NPM with attestation
             - name: Upload Package to NPM Registry
