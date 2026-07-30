@@ -1,15 +1,15 @@
 {
-    "extends": "@shi-corp/development-utilities/config/typescript/base.json",
+    "extends": "@software-hardware-integration-lab/development-utilities/config/typescript/base.json",
     "compilerOptions": {
+        "types": [
+            "node"
+        ],
         /* Emit */
         "outDir": "./bin", /* Specify an output folder for all emitted files. */
         "plugins": [
             {
                 "transform": "typia/lib/transform"
             }
-        ],
-        "skipLibCheck": true,
-        "strictNullChecks": true,
-        "strict": true
+        ]
     }
 }

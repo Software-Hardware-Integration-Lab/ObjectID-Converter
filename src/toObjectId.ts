@@ -27,16 +27,16 @@ export function convertToObjectId(sid: string): string {
     const sidBuffer = new Uint8Array(new Uint32Array(splitSid).buffer);
 
     // Swap the beginning and end of the first byte group
-    [sidBuffer[0], sidBuffer[3]] = [sidBuffer[3], sidBuffer[0]];
+    [sidBuffer[0], sidBuffer[3]] = [sidBuffer[3]!, sidBuffer[0]!];
 
     // Swap the middle of the first byte group
-    [sidBuffer[1], sidBuffer[2]] = [sidBuffer[2], sidBuffer[1]];
+    [sidBuffer[1], sidBuffer[2]] = [sidBuffer[2]!, sidBuffer[1]!];
 
     // Swap the order of the first two of the second byte group
-    [sidBuffer[5], sidBuffer[4]] = [sidBuffer[4], sidBuffer[5]];
+    [sidBuffer[5], sidBuffer[4]] = [sidBuffer[4]!, sidBuffer[5]!];
 
     // Swap the order of the last two of the second byte group
-    [sidBuffer[7], sidBuffer[6]] = [sidBuffer[6], sidBuffer[7]];
+    [sidBuffer[7], sidBuffer[6]] = [sidBuffer[6]!, sidBuffer[7]!];
 
     /** Object ID equivalent of the input SID. */
     const objectId = stringify(sidBuffer);

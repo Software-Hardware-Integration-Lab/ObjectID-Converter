@@ -15,10 +15,10 @@ export function convertToSid(objectId: string & tags.Format<'uuid'>): string {
     const bytes = [...parse(objectId)];
 
     // On the second 4 byte group, reverse its two two-byte group's order
-    [bytes[4], bytes[5]] = [bytes[5], bytes[4]];
+    [bytes[4], bytes[5]] = [bytes[5]!, bytes[4]!];
 
     // On the end of the second byte group, reverse the last two components
-    [bytes[6], bytes[7]] = [bytes[7], bytes[6]];
+    [bytes[6], bytes[7]] = [bytes[7]!, bytes[6]!];
 
     /** Container for the collection of bytes so that they are more easily accessed. */
     const dataView = new DataView(new Uint8Array(bytes).buffer);
