@@ -113,7 +113,7 @@ jobs:
               run: npm run-script build:Prod
 
             # Enable Node.JS in the build environment
-            - name: Install - Node.JS Runtime
+            - name: Configure Node for GH Packages
               uses: actions/setup-node@v6
               with:
                   node-version: 24
@@ -121,7 +121,7 @@ jobs:
                   scope: software-hardware-integration-lab
 
             # Publish the artifact to NPM with attestation
-            - name: Upload Package to NPM Registry
+            - name: Upload Package to GH Packages
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: npm publish --tag ${{ needs.Metadata.outputs.channel }}
